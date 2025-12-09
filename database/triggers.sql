@@ -59,7 +59,45 @@ BEGIN
 END;
 /
 
+CREATE OR REPLACE TRIGGER trg_auto_alert_from_trends
+AFTER INSERT ON behavioral_trends
+FOR EACH ROW
+WHEN (NEW.trend_score > 85)
+BEGIN
+  INSERT INTO alerts (
+    patient_id, risk_level, message, created_at
+  ) VALUES (
+    :NEW.patient_id, 'High', 'Automated alert: High trend score detected', SYSTIMESTAMP
+  );
 
+  INSERT INTO audit_log (
+    username, operation, table_name, action_time, status, reason
+  ) VALUES (
+    USER, 'INSERT', 'ALERTS', SYSTIMESTAMP, 'SUCCESS', 'Auto-alert triggered by trend score'
+  );
+END;
+
+
+CREATE OR REPLACE TRIGGER trg_block_weekends_holidays
+BEFORE INSERT ON visits
+FOR EACH ROW
+DECLARE
+  v_day VARCHAR2(10);
+  v_count NUMBER;
+BEGIN
+  v_day := TO_CHAR(:NEW.visit_date, 'DY', 'NLS_DATE_LANGUAGE=ENGLISH');
+  IF v_day IN ('SAT', 'SUN') THEN
+    RAISE_APPLICATION_ERROR(-20001, 'Visits cannot be scheduled on weekends.');
+  END IF;
+
+  SELECT COUNT(*) INTO v_count
+  FROM holidays
+  WHERE holiday_date = TRUNC(:NEW.visit_date);
+
+  IF v_count > 0 THEN
+    RAISE_APPLICATION_ERROR(-20002, 'Visits cannot be scheduled on holidays.');
+  END IF;
+END;
 
 
 
