@@ -5,7 +5,11 @@ INSERT INTO patients (name, age, gender, contact_info) VALUES ('Josiane Nyirabag
 INSERT INTO patients (name, age, gender, contact_info) VALUES ('Emmanuel Rukundo', 5, 'Male', 'emmanuel.rukundo@gmail.com');
 INSERT INTO patients (name, age, gender, contact_info) VALUES ('Alice Niyonsaba', 29, 'Female', 'alice@example.com');
 INSERT INTO patients (name, age, gender, contact_info) VALUES ('Eric Mugisha', 35, 'Male', 'eric@example.com');
-INSERT INTO patients (patient_id, name, birth_date, gender) VALUES (2, 'Aline', TO_DATE('1995-06-15', 'YYYY-MM-DD'), 'Female');
-INSERT INTO patients (patient_id, name, birth_date, gender) VALUES (1, 'Ngabo', TO_DATE('1990-01-01', 'YYYY-MM-DD'), 'Male');
-                          -------------OBSERVA
-
+INSERT INTO patients (name, age, gender, contact_info) VALUES ('Amina Uwimana', 34, 'Female', 'amina.uwimana@gmail.com');
+                          -------------BEHAVIORAL_TRENDS------------------
+INSERT INTO behavioral_trends (patient_id, trend_type, trend_score, last_updated) VALUES (2, 'Risk Level', 91, TO_DATE('2025-12-01', 'YYYY-MM-DD'));
+INSERT INTO behavioral_trends (patient_id, trend_type, trend_score, last_updated) VALUES (3, 'Engagement', 45, TO_DATE('2025-11-15', 'YYYY-MM-DD'));
+INSERT INTO behavioral_trends (patient_id, trend_type, trend_score, last_updated) VALUES (5, 'Risk Level', 67, TO_DATE('2025-11-30', 'YYYY-MM-DD'));
+INSERT INTO behavioral_trends (patient_id, trend_type, trend_score, last_updated) VALUES (6, 'Engagement', 88, TO_DATE('2025-12-05', 'YYYY-MM-DD'));
+INSERT INTO behavioral_trends (patient_id, trend_type, trend_score, last_updated) VALUES (7, 'Mood Stability', 15, TO_DATE('2025-12-07', 'YYYY-MM-DD'));
+INSERT INTO behavioral_trends (patient_id, trend_type, trend_score, last_updated) VALUES (3, 'Mood Stability', 78, SYSDATE);
